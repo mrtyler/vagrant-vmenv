@@ -1,0 +1,28 @@
+{
+    "global": {
+        "provider": "virtualbox",
+        "cpu": 2,
+        "memory": 1024 
+    },
+    "vms": {
+        "fedora": {
+            "autostart": true,
+            "box": "inclusivedesign/fedora23",
+            "gui": true,
+            "sound": true,
+            "tests_here": true,
+            "folders": {
+                "code": {
+                    "src": ".",
+                    "dest": "/home/vagrant/sync"
+                }
+            },
+            "apps": {
+                "gpii-binder": {
+                    "deploy": false
+                }
+            } 
+        }
+    }
+}
+

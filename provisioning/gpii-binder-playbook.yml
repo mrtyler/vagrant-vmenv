@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  become: true
+
+  vars_files:
+    - "/vagrant/.qi.yml"
+    - "{{ lookup('env', 'VARS_FILE')  }}"
+
+  roles:
+    - facts
+    - nodejs
+

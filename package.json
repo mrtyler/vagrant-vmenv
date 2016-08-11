@@ -1,0 +1,19 @@
+{
+  "name": "vagrant-vmenv",
+  "version": "0.0.1",
+  "description": "Collection of scripts and VMs definitions to build a complete testing and development environment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/amatas/vagrant-vmenv.git"
+  },
+  "author": "Alfredo Matas",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/amatas/vagrant-vmenv/issues"
+  },
+  "homepage": "https://github.com/amatas/vagrant-vmenv#readme"
+}
