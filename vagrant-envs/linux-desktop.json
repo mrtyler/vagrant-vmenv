@@ -7,21 +7,15 @@
     "vms": {
         "fedora": {
             "autostart": true,
-            "box": "inclusivedesign/fedora23",
+            "box": "inclusivedesign/fedora24",
             "gui": true,
             "sound": true,
-            "tests_here": true,
             "folders": {
                 "code": {
                     "src": ".",
                     "dest": "/home/vagrant/sync"
                 }
-            },
-            "apps": {
-                "gpii-binder": {
-                    "deploy": false
-                }
-            } 
+            }
         }
     }
 }

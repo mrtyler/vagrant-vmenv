@@ -14,7 +14,13 @@ require_relative VAGRANT_VMENV_PATH + "/lib/config_provision.rb"
 require_relative VAGRANT_VMENV_PATH + "/lib/config_network.rb"
 require_relative VAGRANT_VMENV_PATH + "/lib/config_folders.rb"
 
-vagrant_env = ENV['VAGRANT_ENV'] || "default"
+qi_file = File.expand_path (".qi.yml")
+if File.exists?(qi_file)
+  qi_definition = YAML.load(File.read(qi_file))
+else
+  raise ".qi.yml file not found in this repository"
+end
+vagrant_env = qi_definition["env_runtime"] || "default"
 environment_file = File.expand_path (VAGRANT_VMENV_PATH + "/vagrant-envs" + 
                                      File::SEPARATOR + vagrant_env )
 if File.exists?(environment_file + ".json")
@@ -38,7 +44,7 @@ Vagrant.configure(2) do |config|
 
       config_provider(instance, vm_config, environment["global"])
 
-      config_provision(instance, vm_config, vm_id)
+      config_provision(instance, vm_config, vm_id, qi_definition["apps"])
 
       config_network(instance, vm_config)
 
