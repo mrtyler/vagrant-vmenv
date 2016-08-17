@@ -23,9 +23,12 @@ def config_provision(instance, vm_config, vm_id, apps)
     raise "File vagrant/provisioning/base-playbook.yml doesn't exist"\
       unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/base-playbook.yml")
 
+    File.open(VAGRANT_VMENV_PATH + "/provisioning/#{vm_id}-#{app}-vagrant-vars.yml",'w') do |h|
+         h.write config.to_yaml
+    end
     cmds = \
     "sudo ansible-galaxy install -fr /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{app}-requirements.yml \n"\
-    "sudo VARS_FILE=#{app}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
+    "sudo VARS_FILE=#{app}-vagrant-vars.yml QI_VARS_FILE=#{vm_id}-#{app}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
     # config.each do |name, value|
     #   cmds << name.upcase + "=" + value.to_s + " \\\n"
     # end

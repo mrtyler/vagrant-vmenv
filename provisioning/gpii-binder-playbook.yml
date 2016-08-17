@@ -4,7 +4,7 @@
   become: true
 
   vars_files:
-    - "/vagrant/.qi.yml"
+    - "{{ lookup('env', 'QI_VARS_FILE')  }}"
     - "{{ lookup('env', 'VARS_FILE')  }}"
 
   roles:
