@@ -1,0 +1,9 @@
+- src: http://github.com/idi-ops/ansible-facts.git
+  name: facts
+
+- src: http://github.com/gpii-ops/ansible-gpii-framework.git
+  name: gpii-framework
+
+- src: http://github.com/amatas/ansible-nodejs.git
+  version: test-vagrant-venv
+  name: nodejs

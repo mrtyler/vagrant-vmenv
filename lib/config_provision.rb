@@ -10,35 +10,34 @@ def config_provision(instance, vm_config, vm_id, apps)
   instance.vm.provision "shell", inline: basecmd
 
   apps.each do |config|
-    app = config["app_name"] #app_name
+    if config["run_in"] == vm_id then
+      app = config["app_name"] #app_name
+      stack = config["software_stack"]
 
-    puts "Up with #{app}"
-    #check if every file is in place
-    raise "File vagrant/provisioning/#{app}-requirements.yml doesn't exist"\
-      unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/#{app}-requirements.yml")
-    raise "File vagrant/provisioning/#{app}-vars.yml doesn't exist"\
-      unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/#{app}-vagrant-vars.yml")
-    raise "File vagrant/provisioning/#{app}-playbook.yml doesn't exist"\
-      unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/#{app}-playbook.yml")
-    raise "File vagrant/provisioning/base-playbook.yml doesn't exist"\
-      unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/base-playbook.yml")
+      #check if every file is in place
+      raise "File vagrant/provisioning/#{stack}-requirements.yml doesn't exist"\
+        unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/#{stack}-requirements.yml")
+      raise "File vagrant/provisioning/#{stack}-vars.yml doesn't exist"\
+        unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/#{stack}-vagrant-vars.yml")
+      raise "File vagrant/provisioning/#{stack}-playbook.yml doesn't exist"\
+        unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/#{stack}-playbook.yml")
+      raise "File vagrant/provisioning/base-playbook.yml doesn't exist"\
+        unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/base-playbook.yml")
 
-    File.open(VAGRANT_VMENV_PATH + "/provisioning/#{vm_id}-#{app}-vagrant-vars.yml",'w') do |h|
-         h.write config.to_yaml
+      File.open(VAGRANT_VMENV_PATH + "/provisioning/#{vm_id}-#{app}-vagrant-vars.yml",'w') do |h|
+           h.write config.to_yaml
+      end
+      cmds = \
+      "sudo ansible-galaxy install -fr /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{stack}-requirements.yml \n"\
+      "sudo VARS_FILE=#{stack}-vagrant-vars.yml QI_VARS_FILE=#{vm_id}-#{app}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
+      if config["deploy"] then #app_start_service
+        cmds << "ansible-playbook --tags='install,configure,deploy' /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{stack}-playbook.yml"
+      else
+        cmds << "ansible-playbook --tags='install,configure' /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{stack}-playbook.yml"
+      end
+      instance.vm.provision "shell", inline: cmds
+      puts cmds
     end
-    cmds = \
-    "sudo ansible-galaxy install -fr /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{app}-requirements.yml \n"\
-    "sudo VARS_FILE=#{app}-vagrant-vars.yml QI_VARS_FILE=#{vm_id}-#{app}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
-    # config.each do |name, value|
-    #   cmds << name.upcase + "=" + value.to_s + " \\\n"
-    # end
-    if config["deploy"] then #app_start_service
-      cmds << "ansible-playbook --tags='install,configure,deploy' /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{app}-playbook.yml"
-    else
-      cmds << "ansible-playbook --tags='install,configure' /vagrant/#{VAGRANT_VMENV_PATH}/provisioning/#{app}-playbook.yml"
-    end
-    instance.vm.provision "shell", inline: cmds
-
   end if apps and ARGV[0] == "up"
 
   vm_config["provision"].each do |type, args|

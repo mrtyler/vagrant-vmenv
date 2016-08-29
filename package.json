@@ -10,10 +10,19 @@
     "type": "git",
     "url": "git+ssh://git@github.com/amatas/vagrant-vmenv.git"
   },
-  "author": "Alfredo Matas",
+  "author": {
+    "name": "Alfredo Matas"
+  },
   "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/amatas/vagrant-vmenv/issues"
   },
-  "homepage": "https://github.com/amatas/vagrant-vmenv#readme"
+  "homepage": "https://github.com/amatas/vagrant-vmenv#readme",
+  "readme": "Vagrant-vmenv\n=============\n\nVagrant-vmenv is a npm module that is used to extend the behavior of a\nVagrantfile. It uses virtual machine definitions to spin up complete \nenviroments where you can run tests or run your code.\n\nInstallation\n------------\n\n```\nnpm install http://github.com/amatas/vagrant-vmenv\ncp node_modules/vagrant-vmenv/Vagrantfile.sample Vagranfile\ncp node_modules/vagrant-vmenv/qi.yml.sample .qi.yml\n```\n\nWorking with vms\n----------------\n\n`vagrant up` to spin up the [default environment definition](vagrant-envs/default.json)\n`vagrant destroy` to stop and destroy the vm\n`vagrant halt` to shutdown the vm\n\n",
+  "readmeFilename": "README.md",
+  "gitHead": "e6d6a1ee9142252ba5d44f57237019f432e9c820",
+  "_id": "vagrant-vmenv@0.0.1",
+  "_shasum": "60d3b3935a7cb3fec781e96085f9b9b4cdf7ebbc",
+  "_from": "../../gits/vagrant-vmenv",
+  "_resolved": "file:../../gits/vagrant-vmenv"
 }
