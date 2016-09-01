@@ -1,6 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
  
+# Builds a file with the list of pairs IP address: hostname which will be read
+# by Ansible to setup the hosts file in each VM
+# Params:
+# +env_vms+: object with the definition of the virtual machines
+
 def build_hosts_list(env_vms)
 
   int_id = 10
@@ -23,10 +28,16 @@ def build_hosts_list(env_vms)
       end
     end if vmconfig["networks"]
   end
-
   base_vars.close
- 
 end
+
+# Configure the network section of a virtual machine. You can set the type of
+# the network, the ip address if needed and a list of forwarded ports.
+# Params:
+# +instance+: The instance of the VM to configure
+# +vm_config+: the definition of the VM. There are to type of networks: private
+# - where the IP setting is available, and public - where virtualbox will set
+# the interface as an external NIC.
 
 def config_network(instance, vm_config)
 
