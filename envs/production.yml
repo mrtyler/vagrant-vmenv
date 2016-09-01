@@ -24,7 +24,7 @@ vms:
     sound: true
     cpu: 4
     memory: 2048
-    network:
+    networks:
       private:
         type: private
     folders:
