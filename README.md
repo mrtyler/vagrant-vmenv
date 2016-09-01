@@ -17,7 +17,7 @@ cp node_modules/vagrant-vmenv/qi.yml.sample .qi.yml
 Working with vms
 ----------------
 
-`vagrant up` to spin up the [default environment definition](vagrant-envs/default.json)
+`vagrant up` to spin up the [default environment definition](envs/default.json)
 `vagrant destroy` to stop and destroy the vm
 `vagrant halt` to shutdown the vm
 
