@@ -1,12 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
  
-def config_folders(instance, vm_config)
- 
-  instance.vm.synced_folder ".", "/vagrant"
+def config_folders(instance, vm_id, apps)
 
-  vm_config["folders"].each do |folder, config|
-    instance.vm.synced_folder config["src"], config["dest"]
-  end if vm_config["folders"]
+  instance.vm.synced_folder ".", "/vagrant" # Always needed by the provisioning
+
+  # Share folder if the "src" variable is set
+  apps.each do |config|
+    if config["run_in"] == vm_id and config["folder"] and config["folder"]["src"] then 
+      instance.vm.synced_folder config["folder"]["src"], config["folder"]["dest"]
+    end
+  end if apps
+
 end
 

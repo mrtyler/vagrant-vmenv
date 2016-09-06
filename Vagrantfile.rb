@@ -54,7 +54,7 @@ Vagrant.configure(2) do |config|
 
       config_network(instance, vm_config)
 
-      config_folders(instance, vm_config)
+      config_folders(instance, vm_id, qi_definition["apps"])
 
     end
   end
