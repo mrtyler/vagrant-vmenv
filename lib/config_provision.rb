@@ -40,11 +40,11 @@ def config_provision(instance, vm_config, vm_id, apps)
         end
         instance.vm.provision "shell", inline: cmds
 
-      elsif ARGV[0] == "provision" then
-        test_cmds = "cd /vagrant \n"
+      elsif ARGV[0] == "provision" and config["test_cmds"] and config["folder"] and config["folder"]["dest"] then
+        test_cmds = "cd #{config['folder']['dest']} \n"
         config["test_cmds"].each do |cmd|
           test_cmds << "DISPLAY=:0 " + cmd + "\n"
-        end unless config["commands"].nil?
+        end unless config["test_cmds"].nil?
         instance.vm.provision "shell", privileged: false, inline: test_cmds
       end
     end
