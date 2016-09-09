@@ -1,6 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
- 
+
 # Builds a file with the list of pairs IP address: hostname which will be read
 # by Ansible to setup the hosts file in each VM
 # Params:
@@ -18,13 +18,15 @@ def build_hosts_list(env_vms)
       if netcfg["type"] == "private" then
         if netcfg['ip'].nil? then
           netcfg['ip'] = "192.168.50." + int_id.to_s
+          #add the default IP to the environment definnition
+          env_vms[vm]["networks"][name]["ip"] = "192.168.50." + int_id.to_s
           int_id += 1
         end
-        if first then 
+        if first then
           base_vars.puts "---\n\nvms_hosts:"
           first = false
         end
-        base_vars.puts "  #{netcfg['ip']}: #{vm}" 
+        base_vars.puts "  #{netcfg['ip']}: #{vm}"
       end
     end if vmconfig["networks"]
   end
@@ -56,9 +58,9 @@ def config_network(instance, vm_config)
     raise "At least the guest port is needed in 'guest_port' variable" \
       if config["guest_port"].nil?
 
-    instance.vm.network "forwarded_port", 
+    instance.vm.network "forwarded_port",
       guest: config["guest_port"],
-      host: config["host_port"] || config["guest_port"], 
+      host: config["host_port"] || config["guest_port"],
       protocol: config["protocol"] || "tcp",
       auto_correct: config["auto_correct"] || true
   end if vm_config["ports"]
