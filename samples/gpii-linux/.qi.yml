@@ -1,0 +1,34 @@
+---
+
+email: anonymous@testdomain.org
+env_runtime: production
+
+apps:
+  - app_name: gpii-linux
+    app_start_service: false
+    git_repository: https://github.com/GPII/linux.git
+    software_stack: gpii-linux
+    folder:
+      dest: /app/gpii-linux
+    run_in: fedora
+    deploy: false
+    setup:
+      - npm install
+      - sudo npm install -g grunt-cli node-gyp
+      - grunt --force build
+    test_cmds:
+      - "find -name \\*.sh -exec chmod +x '{}' \\;"
+      - node tests/AcceptanceTests.js
+      - cd tests && bash UnitTests.sh
+
+  - app_name: couchdb
+    software_stack: couchdb
+    run_in: server
+    deploy: true 
+
+  - app_name: preferences
+    software_stack: preferences
+    run_in: server
+    deploy: true
+    folder:
+      dest: "/app/{{ app_name }}" 
