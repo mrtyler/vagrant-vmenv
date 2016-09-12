@@ -10,7 +10,7 @@ Installation
 
 ```
 npm install http://github.com/amatas/vagrant-vmenv
-cp node_modules/vagrant-vmenv/Vagrantfile.template Vagranfile
+cp node_modules/vagrant-vmenv/Vagrantfile.template Vagrantfile
 cp node_modules/vagrant-vmenv/qi.yml.template .qi.yml
 ```
 
@@ -62,4 +62,4 @@ folder:
 ```
 
 More samples definitions can be found either in the [envs](envs) directory or in
-the [qi.yml.sample](qi.yml.sample).
+the [qi.yml.template](qi.yml.template).
