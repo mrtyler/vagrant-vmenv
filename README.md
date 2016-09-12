@@ -10,8 +10,8 @@ Installation
 
 ```
 npm install http://github.com/amatas/vagrant-vmenv
-cp node_modules/vagrant-vmenv/Vagrantfile.sample Vagranfile
-cp node_modules/vagrant-vmenv/qi.yml.sample .qi.yml
+cp node_modules/vagrant-vmenv/Vagrantfile.template Vagranfile
+cp node_modules/vagrant-vmenv/qi.yml.template .qi.yml
 ```
 
 Working with vms
