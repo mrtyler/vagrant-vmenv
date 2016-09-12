@@ -1,0 +1,23 @@
+---
+
+email: anonymous@testdomain.org
+# see available environments in 'env' directory
+env_runtime: linux-desktop
+
+# The apps variable lists the applications that must be installed. The
+# properties of each application define the source of the code, the way that are
+# deployed and how should run
+
+apps:
+  - app_name: name-of-application
+    app_start_service: false
+    git_repository: https://github.com/user/repo.git
+    software_stack: [nodejs | couchdb]
+    run_in: fedora
+    setup:
+      - command 1
+      - command 2
+    commands:
+      - test command 1
+      - test command 2
+

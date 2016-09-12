@@ -1,0 +1,22 @@
+---
+
+email: anonymous@testdomain.org
+env_runtime: linux-desktop
+
+apps:
+  - app_name: gpii-universal
+    app_start_service: false
+    git_repository: https://github.com/GPII/universal.git
+    software_stack: nodejs
+    folder:
+      dest: /app/gpii-universal
+    run_in: fedora
+    setup:
+      - npm install testem
+      - npm install
+      - "git clone {{ git_repository }} /app/gpii-universal/node_modules/universal"
+    test_cmds:
+      - npm test
+      - testem ci --file tests/web/testem_qi.json
+      - node tests/ProductionConfigTests.js
+
