@@ -21,6 +21,13 @@ Working with vms
 `vagrant destroy` to stop and destroy the vm
 `vagrant halt` to shutdown the vm
 
+Note:
+
+`vagrant up` will exec the commands listed in the _setup_ variable of each
+application.
+`vagrant provision` will exec the commands listed in the _test_cmds_ variable of
+each application.
+
 Networking
 ----------
 
@@ -46,7 +53,20 @@ this is very useful to point services between the VMs.
 Forwarded ports
 ---------------
 
-TODO
+The port forwarding is configured in the VMs definition. The `guest_port`
+variable is the source port to be mapped to the `host_port` variable. The
+`guest_port` must be set in each port forward block, `host_port` and protocol are
+optionals.
+
+```
+ports:
+  - guest_port: 8080
+    host_port: 8888 
+    protocol: tcp
+  - guest_port: 8181
+    host_port: 9999  
+  - guest_port:8081
+```
 
 Shared folders
 --------------
@@ -63,3 +83,4 @@ folder:
 
 More samples definitions can be found either in the [envs](envs) directory or in
 the [qi.yml.template](qi.yml.template).
+
