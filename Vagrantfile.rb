@@ -4,12 +4,6 @@
 require 'json'
 require 'yaml'
 
-VAGRANT_VMENV_PATH = "node_modules/vagrant-vmenv"
-# unless Dir.exists?(VAGRANT_VMENV_PATH)
-#   raise "vagrant-vmenv npm module not found, please install it"
-# end
-
-
 require_relative "lib/config_provider.rb"
 require_relative "lib/config_provision.rb"
 require_relative "lib/config_network.rb"

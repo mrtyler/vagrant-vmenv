@@ -4,6 +4,7 @@
 def config_folders(instance, vm_id, apps)
 
   instance.vm.synced_folder ".", "/vagrant" # Always needed by the provisioning
+  instance.vm.synced_folder VAGRANT_VMENV_PATH + "/provisioning", "/provisioning" # Always needed by the provisioning
 
   # Share folder if the "src" variable is set
   apps.each do |config|
