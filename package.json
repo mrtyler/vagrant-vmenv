@@ -2,7 +2,7 @@
   "name": "vagrant-vmenv",
   "version": "0.0.1",
   "description": "Collection of scripts and VMs definitions to build a complete testing and development environment",
-  "main": "index.js",
+  "main": "locate.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
