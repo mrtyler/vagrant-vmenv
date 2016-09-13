@@ -1,5 +1,11 @@
 ---
 
+# This sample will spin up one VM with the desktop interface (linux-desktop
+# environment). Then will deploy an application named 'gpii-universal' which is
+# a clone of the repository https://github.com/GPII/universal.git. It will exec
+# the commands listed in the 'setup' variable at 'vagrant up' time, and the
+# 'test_cmds' commands will be executed with 'vagrant provision'.
+
 email: anonymous@testdomain.org
 env_runtime: linux-desktop
 
