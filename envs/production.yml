@@ -7,7 +7,6 @@ global:
 vms:
   server:
     autostart: true
-    clone: true
     box: inclusivedesign/centos7
     gui: false
     networks:
