@@ -1,6 +1,5 @@
 ---
 
-nodejs_app_name: gpii-linux-framework
 nodejs_npm_packages:
   - "@development-tools"
   - orca
@@ -13,15 +12,12 @@ nodejs_npm_packages:
   - xorg-x11-proto-devel
   - alsa-lib-devel
   - tuxguitar
-nodejs_app_commands:
-  - npm install
-  - sudo npm install -g grunt-cli node-gyp
-  - grunt --force build
-nodejs_install_devel: true 
-nodejs_app_start_script: gpii.js
-nodejs_app_install_dir: /home/vagrant/gpii/gpii-linux
-nodejs_app_git_clone: true
-nodejs_app_git_repo: https://github.com/gpii/linux.git
-nodejs_app_git_branch: master
-nodejs_branch: lts
-
+nodejs_app_name: "{{ app_name | default('application') }}"
+#nodejs_version: "{{ software_stack_version }}"
+nodejs_app_commands: "{{ setup | default([]) }}"
+#nodejs_app_start_script: "{{ app_start_script }}"
+#nodejs_app_tcp_port: "{{ app_tcp_port }}"
+#nodejs_app_git_clone: false
+nodejs_app_git_repo: "{{ git_repository | default(false) }}"
+nodejs_app_git_branch: "{{ git_branch | default('master') }}"
+nodejs_app_install_dir: "{{ folder['dest'] }}"
