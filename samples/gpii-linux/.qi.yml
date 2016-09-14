@@ -1,15 +1,7 @@
 ---
 
-# This sample will spin up two VMs, one server without desktop interface, and
-# another one with a desktop interface called 'fedora', both are provided by the
-# file 'production.json'. Then 3 applications will be installed, gpii-linux will
-# be installed in the 'fedora' VM and couchdb and preferences will be installed
-# in then 'server' VM. The commands listed in the 'setup' variable will run at
-# 'vagrant up' time, and the commands listed in the 'test_cmds' variable will be
-# run using the 'vagrant provision' command.
-
 email: anonymous@testdomain.org
-env_runtime: production
+env_runtime: linux-desktop
 
 apps:
   - app_name: gpii-linux
@@ -29,14 +21,3 @@ apps:
       - node tests/AcceptanceTests.js
       - cd tests && bash UnitTests.sh
 
-  - app_name: couchdb
-    software_stack: couchdb
-    run_in: server
-    deploy: true 
-
-  - app_name: preferences
-    software_stack: preferences
-    run_in: server
-    deploy: true
-    folder:
-      dest: "/app/{{ app_name }}" 
