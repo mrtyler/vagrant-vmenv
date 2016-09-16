@@ -33,7 +33,7 @@ def config_provision(instance, vm_config, vm_id, apps)
         cmds = \
         "sudo ansible-galaxy install -fr /provisioning/#{stack}-requirements.yml \n"\
         "sudo VARS_FILE=#{stack}-vagrant-vars.yml QI_VARS_FILE=#{vm_id}-#{app}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
-        if config["deploy"] then #app_start_service
+        if config["deploy"] then
           cmds << "ansible-playbook --tags='install,configure,deploy' /provisioning/#{stack}-playbook.yml"
         else
           cmds << "ansible-playbook --tags='install,configure' /provisioning/#{stack}-playbook.yml"

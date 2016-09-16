@@ -13,7 +13,6 @@ env_runtime: production
 
 apps:
   - app_name: gpii-linux
-    app_start_service: false
     git_repository: https://github.com/GPII/linux.git
     software_stack: gpii-linux
     folder:
