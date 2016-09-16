@@ -1,7 +1,12 @@
 ---
 
+# This is a template .qi.yml file. It shows the available variables to setup the
+# applications that will run in the VM enviroment. More examples are available
+# in the 'samples' directory.
+
 email: anonymous@testdomain.org
-# see available environments in 'env' directory
+# env_runtime variable set the VM enviroment that will be used to run the
+# applications below. You can see the available environments in 'env' directory
 env_runtime: linux-desktop
 
 # The apps variable lists the applications that must be installed. The
