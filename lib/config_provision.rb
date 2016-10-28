@@ -22,21 +22,19 @@ def config_provision(instance, vm_config, vm_id, apps)
         raise "File vagrant/provisioning/base-playbook.yml doesn't exist"\
           unless File.file?(VAGRANT_VMENV_PATH + "/provisioning/base-playbook.yml")
 
-        File.open(VAGRANT_VMENV_PATH + "/provisioning/#{vm_id}-#{app}-vagrant-vars.yml",'w') do |h|
-             h.write config.to_yaml
-        end
+        qi_vars = JSON.dump(YAML::load(config.to_yaml))
 
         basecmd = "sudo PYTHONUNBUFFERED=1 VM_HOSTNAME=#{vm_id} "\
-                  "ansible-playbook /provisioning/base-playbook.yml"
+                  "ansible-playbook --extra-vars='#$base_vars' /provisioning/base-playbook.yml"
         instance.vm.provision "shell", inline: basecmd
 
         cmds = \
         "sudo ansible-galaxy install -fr /provisioning/#{stack}-requirements.yml \n"\
-        "sudo VARS_FILE=#{stack}-vagrant-vars.yml QI_VARS_FILE=#{vm_id}-#{app}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
+        "sudo VARS_FILE=#{stack}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
         if config["deploy"] then
-          cmds << "ansible-playbook --tags='install,configure,deploy' /provisioning/#{stack}-playbook.yml"
+          cmds << "ansible-playbook --tags='install,configure,deploy' --extra-vars='#{qi_vars}' /provisioning/#{stack}-playbook.yml"
         else
-          cmds << "ansible-playbook --tags='install,configure' /provisioning/#{stack}-playbook.yml"
+          cmds << "ansible-playbook --tags='install,configure' --extra-vars='#{qi_vars}' /provisioning/#{stack}-playbook.yml"
         end
         instance.vm.provision "shell", inline: cmds
 

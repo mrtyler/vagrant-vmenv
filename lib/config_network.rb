@@ -10,8 +10,6 @@ def build_hosts_list(env_vms)
 
   int_id = 10
 
-  base_vars = File.open(VAGRANT_VMENV_PATH + "/provisioning/base-vars.yml", "w")
-
   first = true
   env_vms.each do |vm, vmconfig|
     vmconfig["networks"].each do |name, netcfg|
@@ -23,14 +21,16 @@ def build_hosts_list(env_vms)
           int_id += 1
         end
         if first then
-          base_vars.puts "---\n\nvms_hosts:"
+          $base_vars = "vms_hosts={"
+          $base_vars << "\"#{netcfg['ip']}\":\"#{vm}\""
           first = false
+        elsif
+          $base_vars << ",\"#{netcfg['ip']}\":\"#{vm}\""
         end
-        base_vars.puts "  #{netcfg['ip']}: #{vm}"
       end
     end if vmconfig["networks"]
   end
-  base_vars.close
+  $base_vars << "}" if $base_vars
 end
 
 # Configure the network section of a virtual machine. You can set the type of

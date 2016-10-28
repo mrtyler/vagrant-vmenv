@@ -4,7 +4,6 @@
   become: true
 
   vars_files:
-    - "{{ lookup('env', 'QI_VARS_FILE') }}"
     - "{{ lookup('env', 'VARS_FILE') }}"
 
   roles:

@@ -3,9 +3,6 @@
 - hosts: localhost
   become: true
 
-  vars_files:
-    - "base-vars.yml"
-
   pre_tasks:
     - name: Set hostname
       hostname: "name={{ lookup('env', 'VM_HOSTNAME') }}"
