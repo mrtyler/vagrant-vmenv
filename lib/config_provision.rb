@@ -30,13 +30,13 @@ def config_provision(instance, vm_config, vm_id, apps)
 
         cmds = \
         "sudo ansible-galaxy install -fr /provisioning/#{stack}-requirements.yml \n"\
-        "sudo VARS_FILE=#{stack}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
+        "VARS_FILE=#{stack}-vagrant-vars.yml PYTHONUNBUFFERED=1 \\\n"
         if config["deploy"] then
           cmds << "ansible-playbook --tags='install,configure,deploy' --extra-vars='#{qi_vars}' /provisioning/#{stack}-playbook.yml"
         else
           cmds << "ansible-playbook --tags='install,configure' --extra-vars='#{qi_vars}' /provisioning/#{stack}-playbook.yml"
         end
-        instance.vm.provision "shell", inline: cmds
+        instance.vm.provision "shell", privileged: false, inline: cmds
 
       elsif ARGV[0] == "provision" and config["test_cmds"] and config["folder"] and config["folder"]["dest"] then
         test_cmds = "cd #{config['folder']['dest']} \n"
