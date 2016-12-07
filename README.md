@@ -9,7 +9,7 @@ Installation
 ------------
 
 ```
-npm install -g http://github.com/amatas/vagrant-vmenv
+npm install -g git+https://github.com/amatas/vagrant-vmenv.git
 cp node_modules/vagrant-vmenv/Vagrantfile.template Vagrantfile
 cp node_modules/vagrant-vmenv/qi.yml.template .qi.yml
 ```
