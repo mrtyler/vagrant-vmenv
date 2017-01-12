@@ -3,10 +3,21 @@
 # applications that will run in the VM enviroment. More examples are available
 # in the 'samples' directory.
 
+### How is email used? git grep in this repo doesn't return anything interesting. Maybe it gets consumed by ansible directly?
+### Regardless, a brief comment explaining how it is used would be nice as well as consistent with the other vars in this file :)
 email: anonymous@testdomain.org
 
 # env_runtime variable sets the VM enviroment that will be used to run the
 # applications below. You can see the available environments in 'env' directory.
+### I agree with Simon
+### (http://lists.gpii.net/pipermail/architecture/2016-September/004320.html) that
+### the difference between 'env_runtime' and 'run_in' is unclear. Part of it is I
+### don't like the name 'env_runtime' :). Maybe just 'env'? 'logical_cluster'?
+### 'cluster_type'? 'vm_group'? 'vm_set'?
+###
+### Could we get rid of this variable and rely solely on 'run_in'? We could direct
+### apps to different VMs in a "cluster" by name instead of by this overarching
+### 'env_runtime'.
 env_runtime: linux-desktop
 
 # The apps variable lists the applications that must be installed. The
@@ -21,14 +32,28 @@ apps:
 # application if the code is not available through a shared folder. You can also
 # set a git_branch variable to set the branch, tag, commit, or pull request to
 # retrieve.
+### Is git_branch optional? Does it default to 'master'?
+###
+### Do we support (or plan to support) more than just git? Should this be
+### something like 'source_repository' or 'vcs_repository'?
     git_repository: https://github.com/user/repo.git
     git_branch: pr/1
 # The software_stack variable sets the software appliance that will be installed
 # in the VM. The avaliable software stacks are in the 'provisioning' directory.
+### Is this value literally "[nodejs | couchdb]", like some kind of list? Or are you indicating "this will be 'nodejs' or 'couchdb'"?
+### If the latter, it's a little confusing since this is the only place you do this (even though there are many options for e.g. 'run_in')
+###
+### This name is also confusing to me. Avtar described it to me as "the role
+### Ansible will use". If so, I vote for being explicit about that. That way, I
+### know where to look when I want to know exactly what "the nodejs
+### software_stack" does.
     software_stack: [nodejs | couchdb]
 # The deploy variable notifies the stack that this application will be
 # launched as a service. Note that the stack must know how to launch this
 # application.
+### What is "the stack"? Maybe "the QI system" or "the QI stack"?
+### I don't understand what it means for an applicatiion to be "launched as a service". Or maybe I understand that but don't understand
+### what it means for an application to be *not* "launched as a service". Like a VM would spin up and run a task and then shutdown?
 deploy: false
 # The 'run_in' variable indicates which VM of the environment will contain the
 # application. To know the name of the VMs see the environment files found in
@@ -51,3 +76,4 @@ deploy: false
 # shared folder mapping 'src' on the host to 'dest' in the VM.
     folder:
       dest: "/app/{{ app_name }}"
+### Where are 'networks' and 'ports', which are described in README.md?
